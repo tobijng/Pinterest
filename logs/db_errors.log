@@ -1,0 +1,4 @@
+Log File for Database Connection Errors
+Database connection errors are logged below:
+-----------------------------
+[2025-02-02 19:36:48] DB Connection Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for localhosts failed: nodename nor servname provided, or not known

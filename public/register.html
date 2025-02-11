@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benutzer Registrierung</title>
+</head>
+<body>
+<h1>Benutzer Registrierung</h1>
+
+<form id="registerForm">
+  <label for="email">E-Mail:</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="username">Benutzername:</label><br>
+  <input type="text" id="username" name="username" required><br><br>
+
+  <label for="password">Passwort:</label><br>
+  <input type="password" id="password" name="password" required><br><br>
+
+  <button type="submit">Registrieren</button>
+</form>
+
+<div id="responseMessage" style="margin-top: 20px;"></div>
+
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function(event) {
+    event.preventDefault();  // Verhindert das Standardverhalten des Formulars (Seiten-Reload)
+
+    // Die Benutzereingaben aus dem Formular holen
+    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Die Daten in ein Objekt packen
+    const userData = {
+      email: email,
+      username: username,
+      password: password
+    };
+
+    // Die POST-Anfrage mit den Benutzerdaten absenden
+    fetch('http://localhost/pinterest/api/router.php?action=register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)  // Umwandlung der Benutzerdaten in JSON
+    })
+            .then(response => response.json())  // Antwort im JSON-Format
+            .then(data => {
+              // Die Antwort der API anzeigen
+              document.getElementById("responseMessage").textContent = data.message;
+            })
+            .catch(error => {
+              console.error("Fehler:", error);
+              document.getElementById("responseMessage").textContent = "Ein Fehler ist aufgetreten.";
+            });
+  });
+</script>
+</body>
+</html>

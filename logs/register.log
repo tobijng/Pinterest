@@ -1,0 +1,4 @@
+# Log file for database-specific errors that occur during login
+# Errors are logged below:
+# -----------------------------
+2025-02-02 23:43:43 - Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'field list'

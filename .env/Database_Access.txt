@@ -1,0 +1,21 @@
+# Database Access Configuration File
+#
+# This file contains sensitive database access credentials that are loaded via the
+# Dotenv package to keep them separate from the source code.
+#
+# The variables are used in the application to establish a secure connection to the database.
+
+# The database host
+DB_HOST=localhost
+
+# The name of the database to connect to
+DB_NAME=pinterest
+
+# The username used to connect to the database
+DB_USER=root
+
+# The password for the database user
+DB_PASS= ""
+
+# The driver to be used for the PDO connection
+DB_DRIVER=mysql

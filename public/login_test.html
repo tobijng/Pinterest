@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-container">
+  <h1>Login</h1>
+  <form id="loginForm" method="POST">
+    <input type="text" id="username_or_email" name="username_or_email" placeholder="Username oder Email" required>
+    <input type="password" id="password" name="password" placeholder="Passwort" required>
+    <button type="submit">Login</button>
+  </form>
+  <div id="errorMessage"></div>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const usernameOrEmail = document.getElementById('username_or_email').value;
+    const password = document.getElementById('password').value;
+
+    fetch('http://localhost/pinterest/api/router.php?action=login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username_or_email: usernameOrEmail,
+        password: password
+      })
+    })
+            .then(response => {
+              console.log(response); // Überprüfe, was die Antwort enthält
+              return response.json();
+            })
+            .then(data => {
+              if (data.success) {
+                window.location.href = "https://www.youtube.com/";  // Weiterleitung nach erfolgreichem Login
+              } else {
+                document.getElementById('errorMessage').innerText = data.message;
+              }
+            })
+            .catch(error => {
+              console.error("Fehler:", error);
+              document.getElementById("responseMessage").textContent = "Ein Fehler ist aufgetreten.";
+            });
+
+  });
+
+</script>
+</body>
+</html>

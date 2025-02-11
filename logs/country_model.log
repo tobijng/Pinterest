@@ -1,0 +1,5 @@
+[2025-02-07T16:48:18.150478+01:00] country_model_logger.ERROR: Fehler beim Abrufen der Länder: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'country_ids' in 'field list' [] []
+[2025-02-07T17:22:28.300598+01:00] country_model_logger.ERROR: Fehler beim Abrufen der Länder: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'country_ids' in 'field list' [] []
+[2025-02-07T18:47:38.167663+01:00] country_model_logger.ERROR: Fehler beim Abrufen der Länder: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'country_ids' in 'field list' [] []
+[2025-02-07T18:48:06.444346+01:00] country_model_logger.ERROR: Fehler beim Abrufen der Länder: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'country_ids' in 'field list' [] []
+[2025-02-07T18:48:18.920540+01:00] country_model_logger.ERROR: Fehler beim Abrufen der Länder: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'country_ids' in 'field list' [] []
