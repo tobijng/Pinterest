@@ -14,7 +14,7 @@ try {
     $mail->Host       = 'smtp.gmail.com';   // SMTP-Server des Anbieters (z. B. Gmail)
     $mail->SMTPAuth   = true;
     $mail->Username   = 'tobiasjung112@gmail.com';  // Deine Absender-Adresse
-    $mail->Password   = 'juzl esdt kqww zwus';  // SMTP-Passwort oder App-Passwort
+    $mail->Password   = '';  // SMTP-Passwort oder App-Passwort
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS-Verschlüsselung
     $mail->Port       = 587;  // Typischerweise 587 für TLS, 465 für SSL
 
@@ -30,8 +30,8 @@ try {
 
     // E-Mail senden
     $mail->send();
-    echo "✅ E-Mail wurde gesendet!";
+    echo "E-Mail wurde gesendet!";
 } catch (Exception $e) {
-    echo "❌ Fehler: {$mail->ErrorInfo}";
+    echo "Fehler: {$mail->ErrorInfo}";
 }
 

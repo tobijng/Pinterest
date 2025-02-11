@@ -27,6 +27,7 @@ $uri = $_SERVER['REQUEST_URI'];
 // Basis-Pfad, der entfernt werden muss (Pfad zur Router-Datei)
 $basePath = '/pinterest/api/router.php';
 
+
 // Prüfen, ob `$basePath` in der URI enthalten ist und entfernen
 if (strpos($uri, $basePath) === 0) {
     $uri = substr($uri, strlen($basePath)); // Entfernt den Base-Path
@@ -37,9 +38,6 @@ $uri = strtok($uri, '?');
 
 // Falls die URI mit einem `/` beginnt, entfernen wir es
 $uri = '/' . ltrim($uri, '/');
-
-// Test-Ausgabe zur Fehleranalyse (nachher wieder entfernen)
-var_dump($uri);
 
 // Dispatcher aufrufen
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
@@ -85,11 +83,13 @@ switch ($routeInfo[0]) {
         }
 
         // Prüfen, ob eine ID übergeben wurde oder nicht
-        if (!empty($vars)) {
-            echo $controller->$methodName($vars['id']);
-        } else {
-            echo $controller->$methodName();
+        $response = !empty($vars) ? $controller->$methodName($vars['id']) : $controller->$methodName();
+
+        // Sicherstellen, dass nur gültiger JSON ausgegeben wird
+        if (is_string($response)) {
+            echo $response;
         }
+
         break;
 
 }

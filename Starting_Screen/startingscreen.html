@@ -8,29 +8,27 @@
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
     <div class="startingscreen">
-    
-    <h1>Welcome to Pinterest</h1>
-    
-    <hr>
-        <label for="email"><b>Email</b></label>
-        <input type="email" placeholder="Enter Email" name="email" required>
 
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+        <h1>Welcome to Pinterest</h1>
 
-        <div class="clearfix">
-            <button type="button" class="forgottenpassword">Forgot Password?</button>
-            <button type="submit" class="loginbutton">Login</button>
-            
-        </div>
-        
+        <hr>
+        <form id="login-form">
+            <label for="email"><b>Email</b></label>
+            <input type="email" id="email" placeholder="Enter Email" name="email" required>
 
+            <label for="password"><b>Password</b></label>
+            <input type="password" id="password" placeholder="Enter Password" name="password" required>
+
+            <div class="clearfix">
+                <button type="button" class="forgottenpassword">Forgot Password?</button>
+                <button type="submit" class="loginbutton">Login</button>
+            </div>
+        </form>
     </div>
-    
+</div>
 
-
-
-
-
+<script src="login.js"></script>
+</body>
+</html>

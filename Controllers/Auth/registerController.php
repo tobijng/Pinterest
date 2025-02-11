@@ -95,6 +95,16 @@ class registerController {
             return "Password must be at least 8 characters long.";
         }
 
+        // Überprüfen, ob das Passwort mindestens eine Zahl enthält
+        if (!preg_match('/\d/', $data['password'])) {
+            return "Password must contain at least one number.";
+        }
+
+        // Überprüfen, ob das Passwort mindestens ein Sonderzeichen enthält
+        if (!preg_match('/[\W_]/', $data['password'])) {
+            return "Password must contain at least one special character.";
+        }
+
         return true;
     }
 }
