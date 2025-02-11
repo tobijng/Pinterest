@@ -18,6 +18,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/login', 'Controllers\Auth\loginController@login');
     $r->addRoute('POST', '/register', 'Controllers\Auth\registerController@register');
     $r->addRoute('POST', '/updateUser', 'Controllers\User\updateUserController@updateUser');
+    //$r->addRoute('POST', '/reset_password', 'Controllers\Auth\resetPasswordController@resetPassword');
 });
 
 // HTTP-Methode und URI holen
