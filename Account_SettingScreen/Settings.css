@@ -35,6 +35,27 @@ label {
     font-size: 14px;
     font-weight: bold;
 }
+.input-container {
+  position: relative;
+  display: inline-block;
+}
+
+#infoInput {
+  padding-right: 45px; /* Platz für den Counter */
+  width: 250px;
+  height: 35px;
+  font-size: 16px;
+}
+
+.char-count {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-size: 12px;
+  color: gray;
+  pointer-events: none; /* Verhindert Klicks auf den Text */
+  background: white; /* Falls Input ein Hintergrund hat */
+  padding: 2px;
 
 
-
+}
