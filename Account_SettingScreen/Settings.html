@@ -26,7 +26,33 @@
             <label for="website"><b>Website</label>
             <input type="website" placeholder="Enter your personal website (optional)" name="username">
             
-            <!-- Pronouns and info to be made (dropdowns for pronouns?)-->
+
+        
+            <label for="pronouns">Pronomen</label>
+            <select id="pronouns" name="pronouns">
+                <option value="he/him">Er/ihn/ihm</option>
+                <option value="she/her">Sie/ihr/ihre</option>
+                <option value="they/them">Es/sein</option>
+            </select>
+
+            <label for="infoInput">Info</label>
+            <div class="input-container">
+              <input type="text" id="infoInput" maxlength="100" placeholder="Info eingeben...">
+              <span id="charCount" class="char-count">100</span>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  const input = document.getElementById("infoInput");
+                  const charCount = document.getElementById("charCount");
+                  const maxLength = input.maxLength;
+              
+                  input.addEventListener("input", () => {
+                    charCount.textContent = maxLength - input.value.length;
+                  });
+                });
+              </script>
+              
         </form>
     </div>
 </div>

@@ -5,7 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: url('Background.jpg') no-repeat center center fixed;
+    background: url(Background.jpg) no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -35,6 +35,26 @@ label {
     font-size: 14px;
     font-weight: bold;
 }
+.input-container {
+  position: relative;
+  display: inline-block;
+}
 
+#infoInput {
+  padding-right: 40px; /* Platz für den Counter */
+  width: 250px;
+  height: 35px;
+  font-size: 16px;
+  line-height: 35px; /* Stellt sicher, dass der Text vertikal zentriert ist */
+}
 
-
+.char-count {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-30%); /* Vertikale Zentrierung */
+  font-size: 8px;
+  color: gray;
+  pointer-events: none;
+  background: transparent; /* Transparent, um den Inputbereich nicht zu verdecken */
+}
