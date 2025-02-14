@@ -56,8 +56,6 @@ class Database {
             exit();
         }
 
-
-
     }
 
     /**

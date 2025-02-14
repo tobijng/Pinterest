@@ -1,95 +1,100 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';// Autoload der Dependencies
+// Load all dependencies using Composer's autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 use function FastRoute\simpleDispatcher;
 
-// Sicherstellen, dass man Controllers/Models nur über den router rufen kann
+// Define API access constant to ensure controllers/models are only accessible via the router
 define('API_ACCESS', true);
 
+// Initialize the FastRoute dispatcher and define API routes
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-    // Definiere die Route für getUser
+    // User-related routes
     $r->addRoute('GET', '/get_user/{id:\d+}', 'Controllers\User\getUserController@getUser');
-    $r->addRoute('GET', '/get_countries', 'Controllers\Dropdowns\getCountryController@getCountries');
-    $r->addRoute('GET', '/get_pronouns', 'Controllers\Dropdowns\getPronounController@getPronoun');
     $r->addRoute('DELETE', '/delete_user/{id:\d+}', 'Controllers\User\deleteUserController@deleteUser');
+
+    // Authentication routes
     $r->addRoute('POST', '/login', 'Controllers\Auth\loginController@login');
     $r->addRoute('POST', '/register', 'Controllers\Auth\registerController@register');
+
+    // User update route
     $r->addRoute('POST', '/updateUser', 'Controllers\User\updateUserController@updateUser');
+
+    // Dropdown data routes
+    $r->addRoute('GET', '/get_countries', 'Controllers\Dropdowns\getCountryController@getCountries');
+    $r->addRoute('GET', '/get_pronouns', 'Controllers\Dropdowns\getPronounController@getPronoun');
+
+    // Password reset route
+    $r->addRoute('POST', '/reset_password', 'Controllers\Auth\resetPasswordController@resetPassword');
+
 });
 
-// HTTP-Methode und URI holen
+// Retrieve the HTTP method and request URI
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-// Basis-Pfad, der entfernt werden muss (Pfad zur Router-Datei)
+// Define the base path of the router file to be removed from the request URI
 $basePath = '/pinterest/api/router.php';
 
-
-// Prüfen, ob `$basePath` in der URI enthalten ist und entfernen
+// Remove base path if present in the URI
 if (strpos($uri, $basePath) === 0) {
-    $uri = substr($uri, strlen($basePath)); // Entfernt den Base-Path
+    $uri = substr($uri, strlen($basePath));
 }
 
-// Falls die URI noch Query-Parameter enthält, entfernen wir sie
+// Remove query parameters from the URI
 $uri = strtok($uri, '?');
 
-// Falls die URI mit einem `/` beginnt, entfernen wir es
+// Ensure the URI starts with a single forward slash
 $uri = '/' . ltrim($uri, '/');
 
-// Dispatcher aufrufen
+// Dispatch the request using FastRoute
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
 switch ($routeInfo[0]) {
-
-    // Route existiert nicht
     case Dispatcher::NOT_FOUND:
+        // Return a 404 response if the requested route does not exist
         http_response_code(404);
         echo json_encode(["success" => false, "message" => "Route Not Found"]);
         break;
 
-    // Falsche Anfrage für bestehende Route
     case Dispatcher::METHOD_NOT_ALLOWED:
+        // Return a 405 response if the request method is not allowed for the existing route
         http_response_code(405);
         echo json_encode(["success" => false, "message" => "Method Not Allowed For This Route"]);
         break;
 
-    // Falls gefunden:
     case Dispatcher::FOUND:
-        // Aufteilung der Route (Controller + Methode, Zusatzinfo)
+        // Extract controller and method from the matched route handler
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-
-        // Aufteilung von Controller und Methode
         list($controllerName, $methodName) = explode('@', $handler);
 
-        // Fehler wenn Controllerklasse nicht existiert
+        // Ensure the controller class exists
         if (!class_exists($controllerName)) {
             http_response_code(500);
             echo json_encode(["success" => false, "message" => "Controller '$controllerName' not found."]);
             exit;
         }
 
-        // Neue Instanz der Klasse
+        // Instantiate the controller
         $controller = new $controllerName();
 
-        // Methode existiert nicht in der Controllerklasse
+        // Ensure the method exists within the controller class
         if (!method_exists($controller, $methodName)) {
             http_response_code(500);
             echo json_encode(["success" => false, "message" => "Method '$methodName' not found in controller '$controllerName'."]);
             exit;
         }
 
-        // Prüfen, ob eine ID übergeben wurde oder nicht
+        // Call the controller method and pass parameters if necessary
         $response = !empty($vars) ? $controller->$methodName($vars['id']) : $controller->$methodName();
 
-        // Sicherstellen, dass nur gültiger JSON ausgegeben wird
+        // Ensure the response is properly formatted as JSON
         if (is_string($response)) {
             echo $response;
         }
-
         break;
-
 }
